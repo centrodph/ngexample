@@ -1,0 +1,16 @@
+.login-wrapper-custom {
+  background-position: 0;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100vh;
+  min-height: 100vh;
+}
+
+.login-custom {
+  height: 50vh;
+  min-height: 50vh;
+}
+
+.login-wrapper-custom .login-group {
+  padding-top: 0;
+}
