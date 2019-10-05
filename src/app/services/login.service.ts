@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
-import { environment } from '../../environments/environment';
-import { LoginRequest, LoginResponse, User } from '../models/LoginRequest';
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BehaviorSubject } from "rxjs";
+import { environment } from "../../environments/environment";
+import { LoginRequest, LoginResponse, User } from "../models/LoginRequest";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class LoginService {
   constructor(private httpClient: HttpClient) {}
@@ -16,24 +16,27 @@ export class LoginService {
   user = this.userSubject.asObservable();
   error = this.errorSubject.asObservable();
   loading = this.loadingSubject.asObservable();
-  getUsers() {
-    return this.httpClient.get(`${environment.apiUrl}/users`);
-  }
+  userToken = null;
   login(data: LoginRequest) {
     this.loadingSubject.next(true);
     const service = this.httpClient.post(`${environment.apiUrl}/auth`, data);
     service.subscribe(this.setUser, error =>
-      this.setLoginError('Invalid credentials')
+      this.setLoginError("Invalid credentials")
     );
     return service;
   }
   setUser = (response: LoginResponse) => {
+    console.log(response.token);
     LoginService.token = response.token;
+    this.userToken = response.token;
     this.userSubject.next(response.user);
     this.loadingSubject.next(false);
-  }
+  };
   setLoginError = (error: string) => {
     this.errorSubject.next(error);
     this.loadingSubject.next(false);
+  };
+  getUserToken() {
+    return this.userToken;
   }
 }
