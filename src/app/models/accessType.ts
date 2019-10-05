@@ -1,0 +1,5 @@
+export enum ACCESS_TYPE {
+  ADMIN = "ADMIN",
+  SUPERVISOR = "SUPERVISOR",
+  OPERATOR = "OPERATOR"
+}
