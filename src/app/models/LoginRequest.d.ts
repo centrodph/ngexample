@@ -10,3 +10,8 @@ export interface User {
   email: string;
   access: ACCESS_TYPE;
 }
+
+export interface LoginResponse{
+    user: User;
+    token: string;
+}
