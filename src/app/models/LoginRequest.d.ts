@@ -1,4 +1,5 @@
 import { ACCESS_TYPE } from "./accessType";
+import { USER_STATUS } from './userStatus';
 
 export interface LoginRequest {
   email: string;
@@ -6,9 +7,11 @@ export interface LoginRequest {
 }
 
 export interface User {
-  id: number;
+  id?: number;
   email: string;
+  password: string;
   access: ACCESS_TYPE;
+  status: USER_STATUS;
 }
 
 export interface LoginResponse{

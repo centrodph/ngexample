@@ -3,7 +3,7 @@
         <section class="title">
             <h3 class="welcome">Welcome!</h3>
         </section>
-        
+
 
         <div class="login-group">
             <div *ngIf="email.invalid && (email.dirty || email.touched)" class="error active">
@@ -31,7 +31,9 @@
                 <input type="password" clrPassword placeholder="Password" formControlName="password" />
             </clr-password-container>
             <div *ngIf="error" class="error active">{{error}}</div>
-            <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid"><app-loading *ngIf="loading"></app-loading> {{!loading && 'Login'}}</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">
+                <app-loading *ngIf="loading"></app-loading> {{!loading ? 'Login' : ''}}
+            </button>
         </div>
     </form>
 </div>

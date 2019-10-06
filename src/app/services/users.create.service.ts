@@ -7,22 +7,22 @@ import { User } from "../models/LoginRequest";
 @Injectable({
   providedIn: "root"
 })
-export class UsersService {
+export class UserCreateService {
   constructor(private httpClient: HttpClient) {}
-  private userListSubject = new BehaviorSubject<User[]>(null);
+  private userSubject = new BehaviorSubject<User>(null);
   private errorSubject = new BehaviorSubject<string>(null);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  users = this.userListSubject.asObservable();
+  users = this.userSubject.asObservable();
   error = this.errorSubject.asObservable();
   loading = this.loadingSubject.asObservable();
-  getUsers() {
+  createUser(user: User) {
     this.loadingSubject.next(true);
-    const service = this.httpClient.get(`${environment.apiUrl}/users`);
-    service.subscribe(this.setUsers, this.setError);
+    const service = this.httpClient.post(`${environment.apiUrl}/users`, user);
+    service.subscribe(this.setUser, this.setError);
     return service;
   }
-  setUsers = (response: any) => {
-    this.userListSubject.next(response);
+  setUser = (response: any) => {
+    this.userSubject.next(response);
     this.loadingSubject.next(false);
   };
   setError = (error: any) => {
