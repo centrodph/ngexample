@@ -1,0 +1,14 @@
+.user-form-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+.login-wrapper.basic-wrapper-form{
+    background: none;
+}
+.login-wrapper.basic-wrapper-form .login {
+    background: none;
+    height: auto;
+    min-height: auto;
+    width: 100%;
+}

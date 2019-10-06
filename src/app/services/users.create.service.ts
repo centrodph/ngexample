@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
 import { environment } from "../../environments/environment";
 import { User } from "../models/LoginRequest";
+import { ServerError } from "../models/serverError";
 
 @Injectable({
   providedIn: "root"
@@ -25,8 +26,8 @@ export class UserCreateService {
     this.userSubject.next(response);
     this.loadingSubject.next(false);
   };
-  setError = (error: any) => {
-    this.errorSubject.next(error);
+  setError = (response: ServerError) => {
+    this.errorSubject.next(response.error.message);
     this.loadingSubject.next(false);
   };
 }

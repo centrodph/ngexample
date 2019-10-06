@@ -18,9 +18,7 @@ export class BasicAuthInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     const currentUser = this.authenticationService.getUserToken();
-    console.log("EHEHEHE", currentUser);
     if (currentUser) {
-      console.log('currentUser', currentUser);
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${currentUser}`
