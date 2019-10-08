@@ -4,16 +4,20 @@ import { BehaviorSubject } from "rxjs";
 import { environment } from "../../environments/environment";
 import { User } from "../models/LoginRequest";
 import { ServerError } from "../models/serverError";
+import { UsersService } from "./users.service";
 
 @Injectable({
   providedIn: "root"
 })
 export class UserCreateService {
-  constructor(private httpClient: HttpClient) {}
+  constructor(
+    private httpClient: HttpClient,
+    private usersService: UsersService
+  ) {}
   private userSubject = new BehaviorSubject<User>(null);
   private errorSubject = new BehaviorSubject<string>(null);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  users = this.userSubject.asObservable();
+  user = this.userSubject.asObservable();
   error = this.errorSubject.asObservable();
   loading = this.loadingSubject.asObservable();
   createUser(user: User) {
@@ -25,6 +29,7 @@ export class UserCreateService {
   setUser = (response: any) => {
     this.userSubject.next(response);
     this.loadingSubject.next(false);
+    this.usersService.getUsers();
   };
   setError = (response: ServerError) => {
     this.errorSubject.next(response.error.message);

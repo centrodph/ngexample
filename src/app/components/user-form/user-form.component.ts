@@ -22,11 +22,19 @@ export class UserFormComponent implements OnInit {
   });
   error = null;
   loading = false;
+  success = false;
   ngOnInit() {
+    this.userCreateService.user.subscribe(user => {
+      this.success = Boolean(user);
+      this.userForm.reset();
+    });
     this.userCreateService.error.subscribe(message => (this.error = message));
-    this.userCreateService.loading.subscribe(
-      loading => (this.loading = loading)
-    );
+    this.userCreateService.loading.subscribe(loading => {
+      this.loading = loading;
+    });
+  }
+  update() {
+    this.success = false;
   }
   get email(): any {
     return this.userForm.get("email");
@@ -54,7 +62,6 @@ export class UserFormComponent implements OnInit {
     }
     this.error = null;
     this.loading = true;
-    console.log(this.access.value)
     this.userCreateService.createUser({
       email: this.email.value,
       password: this.password.value,
