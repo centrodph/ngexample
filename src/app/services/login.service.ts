@@ -25,6 +25,9 @@ export class LoginService {
     );
     return service;
   }
+  logout() {
+    this.userSubject.next(undefined);
+  }
   setUser = (response: LoginResponse) => {
     console.log(response.token);
     LoginService.token = response.token;
