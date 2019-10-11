@@ -13,6 +13,8 @@ import { UserListComponent } from "./components/user-list/user-list.component";
 import { BasicAuthInterceptor } from "./services/auth";
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { HeaderComponent } from './components/header/header.component';
+import { OperationFormComponent } from './components/operation-form/operation-form.component';
+import { OperationListComponent } from './components/operation-list/operation-list.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { HeaderComponent } from './components/header/header.component';
     LoadingComponent,
     UserListComponent,
     UserFormComponent,
-    HeaderComponent
+    HeaderComponent,
+    OperationFormComponent,
+    OperationListComponent
   ],
   imports: [
     BrowserModule,
