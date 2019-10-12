@@ -15,9 +15,9 @@ export class OperationsService {
   operations = this.operationListSubject.asObservable();
   error = this.errorSubject.asObservable();
   loading = this.loadingSubject.asObservable();
-  getUsers() {
+  getOperations() {
     this.loadingSubject.next(true);
-    const service = this.httpClient.get(`${environment.apiUrl}/users`);
+    const service = this.httpClient.get(`${environment.apiUrl}/operations`);
     service.subscribe(this.setUsers, this.setError);
     return service;
   }

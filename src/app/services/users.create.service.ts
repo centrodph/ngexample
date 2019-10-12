@@ -2,8 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
 import { environment } from "../../environments/environment";
-import { User } from "../models/LoginRequest";
-import { ServerError } from "../models/serverError";
+import { User, ServerError } from "../models";
 import { UsersService } from "./users.service";
 
 @Injectable({

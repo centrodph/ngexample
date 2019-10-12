@@ -4,3 +4,4 @@ export * from "./operations";
 export * from "./operationStatus";
 export * from "./serverError";
 export * from "./userStatus";
+export * from "./operationProperties";

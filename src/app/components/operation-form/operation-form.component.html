@@ -1,1 +1,56 @@
-<p>operation-form works!</p>
+<div class="basic-wrapper-form">
+    <form class="login login-custom" clrForm (ngSubmit)="onSubmit()" [formGroup]="operationForm">
+        <section class="title">
+            <h3 class="welcome">Create a new operation!</h3>
+        </section>
+        <div class="user-form-wrapper">
+            <clr-select-container>
+                <label class="clr-sr-only">Status</label>
+                <select clrSelect name="status" placeholder="status" formControlName="status">
+                    <option value=''>Select Status</option>
+                    <option *ngFor="let optionStatus of optionsStatus" value={{optionStatus}}>
+                        {{optionStatus}}
+                    </option>
+                </select>
+                <clr-control-error *ngIf="status.invalid && (status.dirty || status.touched)">
+                    <div *ngIf="status.errors.required">
+                        Status is required.
+                    </div>
+                </clr-control-error>
+            </clr-select-container>
+            <fieldset *ngFor="let itemProp of dynamicProperties.controls; let i = index">
+                <div class="list-group-item">
+                    <h5 class="card-title">Property {{i + 1}}</h5>
+                    <div [formGroup]="itemProp">
+                        <clr-select-container>
+                            <label class="clr-sr-only">Property</label>
+                            <select clrSelect name="property" placeholder="property" formControlName="property">
+                                <option value=''>Select property</option>
+                                <option *ngFor="let optionProperty of optionsProperties(itemProp.controls.property.value)" value={{optionProperty}}>
+                                    {{optionProperty}}
+                                </option>
+                            </select>
+                            <clr-control-error
+                                *ngIf="itemProp.controls.property.invalid && (itemProp.controls.property.dirty || itemProp.controls.property.touched)">
+                                <div *ngIf="itemProp.controls.property.errors.required">
+                                    Property is required.
+                                </div>
+                            </clr-control-error>
+                        </clr-select-container>
+                        <clr-input-container>
+                            <label class="clr-sr-only">Property</label>
+                            <input type="text" name="email" clrInput placeholder="property" formControlName="property"
+                                (change)="update()" autocomplete="ew-prop" />
+                        </clr-input-container>
+                    </div>
+                </div>
+            </fieldset>
+
+            <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+            <div *ngIf="success" class="alert alert-success">success</div>
+            <button type="submit" class="btn btn-primary" [disabled]="!operationForm.valid">
+                <app-loading *ngIf="loading"></app-loading> {{!loading ? 'Submit' : '...'}}
+            </button>
+        </div>
+    </form>
+</div>

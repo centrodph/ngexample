@@ -2,8 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
 import { environment } from "../../environments/environment";
-import { User } from "../models/LoginRequest";
-import { ServerError } from "../models/serverError";
+import { User, ServerError } from "../models";
 import { UsersService } from "./users.service";
 
 @Injectable({
@@ -17,12 +16,15 @@ export class OperationCreateService {
   private userSubject = new BehaviorSubject<User>(null);
   private errorSubject = new BehaviorSubject<string>(null);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  operations = this.userSubject.asObservable();
+  operation = this.userSubject.asObservable();
   error = this.errorSubject.asObservable();
   loading = this.loadingSubject.asObservable();
   createUser(operations: JSON) {
     this.loadingSubject.next(true);
-    const service = this.httpClient.post(`${environment.apiUrl}/operations`, operations);
+    const service = this.httpClient.post(
+      `${environment.apiUrl}/operations`,
+      operations
+    );
     service.subscribe(this.setOperation, this.setError);
     return service;
   }
