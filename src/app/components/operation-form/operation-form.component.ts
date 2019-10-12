@@ -23,15 +23,15 @@ export class OperationFormComponent implements OnInit {
     properties: new FormArray([
       this.formBuilder.group({
         property: ["", Validators.required],
-        value: ["", [Validators.required, Validators.email]]
+        value: ["", [Validators.required]]
       }),
       this.formBuilder.group({
         property: ["", Validators.required],
-        value: ["", [Validators.required, Validators.email]]
+        value: ["", [Validators.required]]
       }),
       this.formBuilder.group({
         property: ["", Validators.required],
-        value: ["", [Validators.required, Validators.email]]
+        value: ["", [Validators.required]]
       })
     ])
   });
@@ -61,10 +61,32 @@ export class OperationFormComponent implements OnInit {
     return Object.keys(OPERATION_STATUS);
   }
   optionsProperties(prop) {
-    const used = this.dynamicProperties.value.map(i => i.property).filter(i => i !== prop);
+    const used = this.dynamicProperties.value
+      .map(i => i.property)
+      .filter(i => i !== prop);
     return Object.keys(PROPERTY_TYPE).filter(type => !used.includes(type));
   }
   get status(): any {
     return this.operationForm.get("status");
+  }
+
+  update() {
+    this.success = false;
+  }
+  onSubmit() {
+    if (this.operationForm.invalid) {
+      return;
+    }
+    this.error = null;
+    this.loading = true;
+    const properties = this.dynamicProperties.value.reduce((prev, prop) => {
+      prev[prop.property] = prop.value;
+      return prev;
+    }, {});
+    console.log(properties);
+    this.operationCreateService.createOperation({
+      status: this.status.value as OPERATION_STATUS,
+      properties
+    });
   }
 }

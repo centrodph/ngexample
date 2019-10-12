@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
 import { environment } from "../../environments/environment";
-import { User, ServerError } from "../models";
+import { User, ServerError, OperationCreateRequest } from "../models";
 import { UsersService } from "./users.service";
 
 @Injectable({
@@ -19,8 +19,9 @@ export class OperationCreateService {
   operation = this.userSubject.asObservable();
   error = this.errorSubject.asObservable();
   loading = this.loadingSubject.asObservable();
-  createUser(operations: JSON) {
+  createOperation(operations: OperationCreateRequest) {
     this.loadingSubject.next(true);
+    console.log(operations);
     const service = this.httpClient.post(
       `${environment.apiUrl}/operations`,
       operations
@@ -34,6 +35,7 @@ export class OperationCreateService {
     this.usersService.getUsers();
   };
   setError = (response: ServerError) => {
+    console.log(response);
     this.errorSubject.next(response.error.message);
     this.loadingSubject.next(false);
   };

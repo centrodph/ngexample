@@ -7,3 +7,8 @@ export interface Operation {
   created_at: string;
   created_by: number;
 }
+
+export interface OperationCreateRequest {
+  status: OPERATION_STATUS;
+  properties: JSON;
+}

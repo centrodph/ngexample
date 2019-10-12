@@ -26,7 +26,9 @@
                             <label class="clr-sr-only">Property</label>
                             <select clrSelect name="property" placeholder="property" formControlName="property">
                                 <option value=''>Select property</option>
-                                <option *ngFor="let optionProperty of optionsProperties(itemProp.controls.property.value)" value={{optionProperty}}>
+                                <option
+                                    *ngFor="let optionProperty of optionsProperties(itemProp.controls.property.value)"
+                                    value={{optionProperty}}>
                                     {{optionProperty}}
                                 </option>
                             </select>
@@ -38,9 +40,16 @@
                             </clr-control-error>
                         </clr-select-container>
                         <clr-input-container>
-                            <label class="clr-sr-only">Property</label>
-                            <input type="text" name="email" clrInput placeholder="property" formControlName="property"
-                                (change)="update()" autocomplete="ew-prop" />
+                            <label class="clr-sr-only">Value</label>
+                            <input type="text" name="value" clrInput placeholder="Value" formControlName="value"
+                                (change)="update()" autocomplete="new-prop" />
+
+                            <clr-control-error
+                                *ngIf="itemProp.controls.value.invalid && (itemProp.controls.value.dirty || itemProp.controls.value.touched)">
+                                <div *ngIf="itemProp.controls.value.errors.required">
+                                    Value is required.
+                                </div>
+                            </clr-control-error>
                         </clr-input-container>
                     </div>
                 </div>
