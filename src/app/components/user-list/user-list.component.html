@@ -19,7 +19,8 @@
             <td>{{user.status}}</td>
             <td>
                 <button type="submit"
-                    [ngClass]="{'btn': true, 'btn-sm': true, 'btn-danger-outline': user.status === 'ACTIVE' }">
+                    [ngClass]="{'btn': true, 'btn-sm': true, 'btn-danger-outline': user.status === 'ACTIVE' }"
+                    (click)='toggleStatus(user)'>
                     <app-loading *ngIf="loading"></app-loading> {{user.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}}
                 </button>
             </td>

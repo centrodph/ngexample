@@ -63,6 +63,7 @@ export class UserFormComponent implements OnInit {
     }
     this.error = null;
     this.loading = true;
+    this.success = false;
     this.userCreateService.createUser({
       email: this.email.value,
       password: this.password.value,
