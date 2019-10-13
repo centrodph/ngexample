@@ -20,6 +20,7 @@ export class UserFormComponent implements OnInit {
     access: new FormControl("", [Validators.required]),
     status: new FormControl("", [Validators.required])
   });
+  opened = false;
   error = null;
   loading = false;
   success = false;
