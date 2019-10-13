@@ -9,6 +9,7 @@ import { Operation } from "../../models/";
 })
 export class OperationListComponent implements OnInit {
   constructor(private operationService: OperationsService) {}
+  editOperation: Operation;
   error: string = null;
   loading = false;
   operations: Operation[];
@@ -21,5 +22,8 @@ export class OperationListComponent implements OnInit {
       loading => (this.loading = loading)
     );
     this.operationService.getOperations();
+  }
+  edit(operation: Operation) {
+    this.editOperation = operation;
   }
 }

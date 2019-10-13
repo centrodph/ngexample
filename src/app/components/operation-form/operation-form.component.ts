@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -6,7 +6,7 @@ import {
   Validators
 } from "@angular/forms";
 import { OperationCreateService } from "../../services/operation.create.service";
-import { OPERATION_STATUS, PROPERTY_TYPE } from "../../models";
+import { OPERATION_STATUS, PROPERTY_TYPE, Operation } from "../../models";
 
 @Component({
   selector: "app-operation-form",
@@ -14,10 +14,12 @@ import { OPERATION_STATUS, PROPERTY_TYPE } from "../../models";
   styleUrls: ["./operation-form.component.css"]
 })
 export class OperationFormComponent implements OnInit {
+  @Input() editOperation: Operation;
   constructor(
     private operationCreateService: OperationCreateService,
     private formBuilder: FormBuilder
   ) {}
+  opened = false;
   operationForm = this.formBuilder.group({
     status: new FormControl("", [Validators.required]),
     properties: new FormArray([
@@ -69,9 +71,24 @@ export class OperationFormComponent implements OnInit {
   get status(): any {
     return this.operationForm.get("status");
   }
-
+  get isEditMode(): boolean {
+    return Boolean(this.editOperation);
+  }
   update() {
     this.success = false;
+  }
+  openModal() {
+    if (this.editOperation) {
+      this.operationForm.setValue({
+        status: this.editOperation.status,
+        properties: Object.keys(this.editOperation.properties).map(key => ({
+          property: key,
+          value: this.editOperation.properties[key]
+        }))
+      });
+    }
+    this.success = false;
+    this.opened = true;
   }
   onSubmit() {
     if (this.operationForm.invalid) {
@@ -83,8 +100,14 @@ export class OperationFormComponent implements OnInit {
       prev[prop.property] = prop.value;
       return prev;
     }, {});
-    console.log(properties);
-    this.operationCreateService.createOperation({
+    if (this.editOperation) {
+      return this.operationCreateService.editOperation({
+        id: this.editOperation.id,
+        status: this.status.value as OPERATION_STATUS,
+        properties
+      });
+    }
+    return this.operationCreateService.createOperation({
       status: this.status.value as OPERATION_STATUS,
       properties
     });

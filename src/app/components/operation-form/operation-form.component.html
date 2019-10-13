@@ -1,65 +1,77 @@
-<div class="basic-wrapper-form">
-    <form class="login login-custom" clrForm (ngSubmit)="onSubmit()" [formGroup]="operationForm">
-        <section class="title">
-            <h3 class="welcome">Create a new operation!</h3>
-        </section>
-        <div class="user-form-wrapper">
-            <clr-select-container>
-                <label class="clr-sr-only">Status</label>
-                <select clrSelect name="status" placeholder="status" formControlName="status">
-                    <option value=''>Select Status</option>
-                    <option *ngFor="let optionStatus of optionsStatus" value={{optionStatus}}>
-                        {{optionStatus}}
-                    </option>
-                </select>
-                <clr-control-error *ngIf="status.invalid && (status.dirty || status.touched)">
-                    <div *ngIf="status.errors.required">
-                        Status is required.
-                    </div>
-                </clr-control-error>
-            </clr-select-container>
-            <fieldset *ngFor="let itemProp of dynamicProperties.controls; let i = index">
-                <div class="list-group-item">
-                    <h5 class="card-title">Property {{i + 1}}</h5>
-                    <div [formGroup]="itemProp">
-                        <clr-select-container>
-                            <label class="clr-sr-only">Property</label>
-                            <select clrSelect name="property" placeholder="property" formControlName="property">
-                                <option value=''>Select property</option>
-                                <option
-                                    *ngFor="let optionProperty of optionsProperties(itemProp.controls.property.value)"
-                                    value={{optionProperty}}>
-                                    {{optionProperty}}
-                                </option>
-                            </select>
-                            <clr-control-error
-                                *ngIf="itemProp.controls.property.invalid && (itemProp.controls.property.dirty || itemProp.controls.property.touched)">
-                                <div *ngIf="itemProp.controls.property.errors.required">
-                                    Property is required.
-                                </div>
-                            </clr-control-error>
-                        </clr-select-container>
-                        <clr-input-container>
-                            <label class="clr-sr-only">Value</label>
-                            <input type="text" name="value" clrInput placeholder="Value" formControlName="value"
-                                (change)="update()" autocomplete="new-prop" />
+<button class="btn btn-outline" type="button" (click)="openModal()">
+    {{isEditMode ? 'Edit' : 'Create Operation'}}
+</button>
+<form *ngIf='opened' class="login login-custom" clrForm (ngSubmit)="onSubmit()" [formGroup]="operationForm">
+    <clr-modal [(clrModalOpen)]="opened">
 
-                            <clr-control-error
-                                *ngIf="itemProp.controls.value.invalid && (itemProp.controls.value.dirty || itemProp.controls.value.touched)">
-                                <div *ngIf="itemProp.controls.value.errors.required">
-                                    Value is required.
-                                </div>
-                            </clr-control-error>
-                        </clr-input-container>
-                    </div>
+        <h3 class="modal-title">{{isEditMode ? 'Edit Operation' : 'Create Operation'}}</h3>
+        <div class="modal-body" style='padding-bottom: 0.5rem;'>
+            <div class="basic-wrapper-form">
+                <div class="user-form-wrapper">
+                    <h5 class="card-title">Status</h5>
+                    <clr-select-container>
+                        <label class="clr-sr-only">Status</label>
+
+                        <select clrSelect name="status" placeholder="status" formControlName="status">
+                            <option value=''>Select Status</option>
+                            <option *ngFor="let optionStatus of optionsStatus" value={{optionStatus}}>
+                                {{optionStatus}}
+                            </option>
+                        </select>
+                        <clr-control-error *ngIf="status.invalid && (status.dirty || status.touched)">
+                            <div *ngIf="status.errors.required">
+                                Status is required.
+                            </div>
+                        </clr-control-error>
+                    </clr-select-container>
+                    <fieldset *ngFor="let itemProp of dynamicProperties.controls; let i = index">
+                        <div class="list-group-item">
+                            <h5 class="card-title">Property {{i + 1}}</h5>
+                            <div [formGroup]="itemProp">
+                                <clr-select-container>
+                                    <label class="clr-sr-only">Property</label>
+                                    <select clrSelect name="property" placeholder="property" formControlName="property">
+                                        <option value=''>Select property</option>
+                                        <option
+                                            *ngFor="let optionProperty of optionsProperties(itemProp.controls.property.value)"
+                                            value={{optionProperty}}>
+                                            {{optionProperty}}
+                                        </option>
+                                    </select>
+                                    <clr-control-error
+                                        *ngIf="itemProp.controls.property.invalid && (itemProp.controls.property.dirty || itemProp.controls.property.touched)">
+                                        <div *ngIf="itemProp.controls.property.errors.required">
+                                            Property is required.
+                                        </div>
+                                    </clr-control-error>
+                                </clr-select-container>
+                                <clr-input-container>
+                                    <label class="clr-sr-only">Value</label>
+                                    <input type="text" name="value" clrInput placeholder="Value" formControlName="value"
+                                        (change)="update()" autocomplete="new-prop" />
+
+                                    <clr-control-error
+                                        *ngIf="itemProp.controls.value.invalid && (itemProp.controls.value.dirty || itemProp.controls.value.touched)">
+                                        <div *ngIf="itemProp.controls.value.errors.required">
+                                            Value is required.
+                                        </div>
+                                    </clr-control-error>
+                                </clr-input-container>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div *ngIf="error" class="alert alert-danger">{{error}}</div>
+                    <div *ngIf="success" class="alert alert-success">success</div>
                 </div>
-            </fieldset>
-
-            <div *ngIf="error" class="alert alert-danger">{{error}}</div>
-            <div *ngIf="success" class="alert alert-success">success</div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline" type="button" (click)="opened = false">Cancel</button>
             <button type="submit" class="btn btn-primary" [disabled]="!operationForm.valid">
                 <app-loading *ngIf="loading"></app-loading> {{!loading ? 'Submit' : '...'}}
             </button>
         </div>
-    </form>
-</div>
+        <div class="modal-backdrop" aria-hidden="true"></div>
+    </clr-modal>
+</form>

@@ -12,3 +12,7 @@ export interface OperationCreateRequest {
   status: OPERATION_STATUS;
   properties: JSON;
 }
+
+export interface OperationEditRequest extends OperationCreateRequest {
+  id: number;
+}

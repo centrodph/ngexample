@@ -2,7 +2,12 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { BehaviorSubject } from "rxjs";
 import { environment } from "../../environments/environment";
-import { User, ServerError, OperationCreateRequest } from "../models";
+import {
+  User,
+  ServerError,
+  OperationCreateRequest,
+  OperationEditRequest
+} from "../models";
 import { OperationsService } from "./operations.service";
 
 @Injectable({
@@ -24,6 +29,15 @@ export class OperationCreateService {
     const service = this.httpClient.post(
       `${environment.apiUrl}/operations`,
       operations
+    );
+    service.subscribe(this.setOperation, this.setError);
+    return service;
+  }
+  editOperation(operation: OperationEditRequest) {
+    this.loadingSubject.next(true);
+    const service = this.httpClient.put(
+      `${environment.apiUrl}/operation/${operation.id}`,
+      operation
     );
     service.subscribe(this.setOperation, this.setError);
     return service;
