@@ -1,0 +1,4 @@
+<div class="item-property" *ngFor="let prop of properties | keyvalue">
+    <span class="label">{{prop.key | propertyPipe }} <span class="badge">{{prop.value}}</span>
+    </span>
+</div>

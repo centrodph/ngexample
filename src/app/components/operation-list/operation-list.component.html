@@ -1,1 +1,25 @@
-<p>operation-list works!</p>
+<h3>Operation list:
+    <span *ngIf='operations'>
+        ({{operations.length}})
+    </span>
+</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Status</th>
+            <th>Properties</th>
+            <th>Created At</th>
+            <th>Created By</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let operation of operations; index as i;">
+            <td>{{operation.status}}</td>
+            <td><app-properties-list [properties]='operation.properties'></app-properties-list></td>
+            <td>{{operation.created_at | date:"MM/dd/yy"}}</td>
+            <td>{{operation.email}}</td>
+            <td>actions</td>
+        </tr>
+    </tbody>
+</table>

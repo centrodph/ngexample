@@ -11,10 +11,12 @@ import { LoginComponent } from "./login/login.component";
 import { LoadingComponent } from "./components/loading/loading.component";
 import { UserListComponent } from "./components/user-list/user-list.component";
 import { BasicAuthInterceptor } from "./services/auth";
-import { UserFormComponent } from './components/user-form/user-form.component';
-import { HeaderComponent } from './components/header/header.component';
-import { OperationFormComponent } from './components/operation-form/operation-form.component';
-import { OperationListComponent } from './components/operation-list/operation-list.component';
+import { UserFormComponent } from "./components/user-form/user-form.component";
+import { HeaderComponent } from "./components/header/header.component";
+import { OperationFormComponent } from "./components/operation-form/operation-form.component";
+import { OperationListComponent } from "./components/operation-list/operation-list.component";
+import { PropertiesListComponent } from "./components/properties-list/properties-list.component";
+import { PropertyPipe } from "./utils/PropertyPipe";
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { OperationListComponent } from './components/operation-list/operation-li
     UserFormComponent,
     HeaderComponent,
     OperationFormComponent,
-    OperationListComponent
+    OperationListComponent,
+    PropertiesListComponent,
+    PropertyPipe
   ],
   imports: [
     BrowserModule,
@@ -33,7 +37,7 @@ import { OperationListComponent } from './components/operation-list/operation-li
     AppRoutingModule,
     ClarityModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }
