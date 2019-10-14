@@ -2,6 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { ChartsModule } from 'ng2-charts';
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
@@ -17,6 +18,7 @@ import { OperationFormComponent } from "./components/operation-form/operation-fo
 import { OperationListComponent } from "./components/operation-list/operation-list.component";
 import { PropertiesListComponent } from "./components/properties-list/properties-list.component";
 import { PropertyPipe } from "./utils/PropertyPipe";
+import { StatsComponent } from './components/stats/stats.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import { PropertyPipe } from "./utils/PropertyPipe";
     OperationFormComponent,
     OperationListComponent,
     PropertiesListComponent,
-    PropertyPipe
+    PropertyPipe,
+    StatsComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { PropertyPipe } from "./utils/PropertyPipe";
     ClarityModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
+    ChartsModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: BasicAuthInterceptor, multi: true }

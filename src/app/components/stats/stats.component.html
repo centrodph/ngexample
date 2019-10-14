@@ -1,0 +1,12 @@
+<section *ngIf='userPerStatus'>
+    <h3>Users per Status</h3>
+    <div class="base-chart">
+        <canvas baseChart [data]="userPerStatus.data" [labels]="userPerStatus.label" chartType="pie"></canvas>
+    </div>
+</section>
+<section *ngIf='operationsPerDay'>
+    <h3>Operations per Day</h3>
+    <div class="base-chart">
+        <canvas baseChart [data]="operationsPerDay.data" [labels]="operationsPerDay.label" chartType="bar" [legend]="barChartLegend"></canvas>
+    </div>
+</section>

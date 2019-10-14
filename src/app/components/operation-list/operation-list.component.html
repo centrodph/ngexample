@@ -2,8 +2,7 @@
     <span *ngIf='operations'>
         ({{operations.length}})
     </span>
-
-    <app-operation-form></app-operation-form>
+    <app-operation-form *ngIf='allowAdd'></app-operation-form>
 </h3>
 <table class="table">
     <thead>
@@ -12,7 +11,7 @@
             <th>Properties</th>
             <th>Created At</th>
             <th>Created By</th>
-            <th>Actions</th>
+            <th *ngIf='allowEdit'>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -23,7 +22,7 @@
             </td>
             <td>{{operation.created_at | date:"MM/dd/yy"}}</td>
             <td>{{operation.email}}</td>
-            <td class="left">
+            <td *ngIf='allowEdit' class="left">
                 <app-operation-form [editOperation]='operation'></app-operation-form>
             </td>
         </tr>

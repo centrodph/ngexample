@@ -1,29 +1,33 @@
-<h3>User list:
-    <span *ngIf='users'>
-        ({{users.length}})
-    </span>
-</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Email</th>
-            <th>Access</th>
-            <th>Status</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let user of users; index as i;">
-            <td>{{user.email}}</td>
-            <td>{{user.access}}</td>
-            <td>{{user.status}}</td>
-            <td>
-                <button type="submit"
-                    [ngClass]="{'btn': true, 'btn-sm': true, 'btn-danger-outline': user.status === 'ACTIVE' }"
-                    (click)='toggleStatus(user)'>
-                    <app-loading *ngIf="loading"></app-loading> {{user.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}}
-                </button>
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div *ngIf='showUsers'>
+    <h3>User list:
+        <span *ngIf='users'>
+            ({{users.length}})
+        </span>
+        <app-user-form></app-user-form>
+    </h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Email</th>
+                <th>Access</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of users; index as i;">
+                <td>{{user.email}}</td>
+                <td>{{user.access}}</td>
+                <td>{{user.status}}</td>
+                <td>
+                    <button type="submit"
+                        [ngClass]="{'btn': true, 'btn-sm': true, 'btn-danger-outline': user.status === 'ACTIVE' }"
+                        (click)='toggleStatus(user)'>
+                        <app-loading *ngIf="loading"></app-loading>
+                        {{user.status === 'ACTIVE' ? 'Deactivate' : 'Activate'}}
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -34,11 +34,11 @@ export class LoginService {
     this.userToken = response.token;
     this.userSubject.next(response.user);
     this.loadingSubject.next(false);
-  };
+  }
   setLoginError = (error: string) => {
     this.errorSubject.next(error);
     this.loadingSubject.next(false);
-  };
+  }
   getUserToken() {
     return this.userToken;
   }
